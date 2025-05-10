@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Search, Grid2x2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -27,17 +26,7 @@ const Header = () => {
         <Link to="/contacts" className="text-darkgray hover:text-primary">Contacts</Link>
       </nav>
 
-      <div className="flex items-center space-x-4">
-        <button className="relative">
-          <ShoppingCart className="h-5 w-5 text-darkgray" />
-          <span className="absolute -top-1 -right-1 bg-softorange text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
-        </button>
-        <button>
-          <Search className="h-5 w-5 text-darkgray" />
-        </button>
-        <button>
-          <Grid2x2 className="h-5 w-5 text-darkgray" />
-        </button>
+      <div className="flex items-center">
         <Button variant="outline" className="rounded-full">Contact</Button>
       </div>
     </header>
