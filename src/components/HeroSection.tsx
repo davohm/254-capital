@@ -28,7 +28,7 @@ const HeroSection = () => {
           clarity and financial health for our clients amidst their obligations.
         </p>
         
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-6 mb-[70px]">
           <Button className="bg-[#FF9245] hover:bg-[#FF9245]/90 border-0 text-white rounded-full px-8 py-6 font-medium">
             Make Appointment
           </Button>
