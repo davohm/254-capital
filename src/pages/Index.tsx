@@ -8,10 +8,12 @@ import ServicesGrid from '@/components/ServicesGrid';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Header />
-      <HeroSection />
-      <ServiceHighlights />
+      <div className="relative">
+        <HeroSection />
+        <ServiceHighlights />
+      </div>
       <FeaturedLogos />
       <ServicesGrid />
     </div>

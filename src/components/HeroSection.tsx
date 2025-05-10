@@ -5,39 +5,40 @@ import { Play } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-[#004c4c] overflow-hidden">
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 z-10">
-            <div className="inline-block bg-black/30 text-white text-sm px-4 py-1 rounded-full mb-6">
-              YOUR SUCCESS, OUR PRIORITY
+    <section className="relative py-20 px-4 md:px-20 lg:px-24 mx-4 my-6 rounded-3xl bg-[#004c4c] overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+          alt="Tax professionals working together"
+          className="w-full h-full object-cover opacity-20 mix-blend-overlay"
+        />
+      </div>
+      
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <div className="border border-white/20 rounded-full inline-flex px-6 py-2 mb-6">
+          <p className="text-sm text-white tracking-wide uppercase">YOUR SUCCESS, OUR PRIORITY</p>
+        </div>
+        
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          Stress-Free Tax<br />Services
+        </h1>
+        
+        <p className="text-white/80 mb-8 max-w-md text-base">
+          Our tax advisor is dedicated to navigating complex tax laws, ensuring
+          clarity and financial health for our clients amidst their obligations.
+        </p>
+        
+        <div className="flex items-center space-x-6">
+          <Button className="bg-[#FF9245] hover:bg-[#FF9245]/90 border-0 text-white rounded-full px-8 py-6 font-medium">
+            Make Appointment
+          </Button>
+          
+          <button className="flex items-center space-x-3 text-white">
+            <div className="bg-white/20 rounded-full p-3 backdrop-blur-sm">
+              <Play className="h-4 w-4 text-white" fill="white" />
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Stress-Free Tax<br />Services
-            </h1>
-            <p className="text-white/80 mb-8 max-w-md">
-              Our tax advice is dedicated to navigating complex tax laws, ensuring
-              clarity and financial health for our clients amidst their obligations.
-            </p>
-            <div className="flex items-center space-x-6">
-              <Button className="bg-softorange hover:bg-softorange/90 text-white rounded-full px-8 py-6">
-                Make Appointment
-              </Button>
-              <button className="flex items-center space-x-2 text-white">
-                <div className="bg-white/20 rounded-full p-2 backdrop-blur-sm">
-                  <Play className="h-5 w-5 text-white" fill="white" />
-                </div>
-                <span>Play Video</span>
-              </button>
-            </div>
-          </div>
-          <div className="md:w-1/2 mt-10 md:mt-0">
-            <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
-              alt="Tax professionals working together"
-              className="rounded-lg shadow-xl"
-            />
-          </div>
+            <span>Play Video</span>
+          </button>
         </div>
       </div>
     </section>
