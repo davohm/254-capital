@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +65,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom colors for our tax service site
+				softgreen: '#4CD4A2',
+				mintgreen: '#3AB795',
+				softgray: '#F1F1F1',
+				darkgray: '#444444',
+				softorange: '#FF9245',
+				beige: '#F7F6F1',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
