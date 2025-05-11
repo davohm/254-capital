@@ -66,7 +66,9 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for our tax service site
+				// Custom colors for 254 Capital
+				primary254: '#15133F',
+				secondary254: '#48A7A7',
 				softgreen: '#4CD4A2',
 				mintgreen: '#3AB795',
 				softgray: '#F1F1F1',

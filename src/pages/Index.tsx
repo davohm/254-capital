@@ -1,22 +1,27 @@
 
 import React from 'react';
-import Header from '@/components/Header';
+import Layout from '@/components/Layout';
 import HeroSection from '@/components/HeroSection';
 import ServiceHighlights from '@/components/ServiceHighlights';
-import FeaturedLogos from '@/components/FeaturedLogos';
-import ServicesGrid from '@/components/ServicesGrid';
+import SupplyChainFinancing from '@/components/SupplyChainFinancing';
+import WhyChooseUs from '@/components/WhyChooseUs';
+import QualifyingBusinesses from '@/components/QualifyingBusinesses';
+import TeamSection from '@/components/TeamSection';
+import PerformanceMetrics from '@/components/PerformanceMetrics';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <Layout>
       <div className="relative">
         <HeroSection />
         <ServiceHighlights />
       </div>
-      <FeaturedLogos />
-      <ServicesGrid />
-    </div>
+      <SupplyChainFinancing />
+      <WhyChooseUs />
+      <QualifyingBusinesses />
+      <PerformanceMetrics />
+      <TeamSection />
+    </Layout>
   );
 };
 
