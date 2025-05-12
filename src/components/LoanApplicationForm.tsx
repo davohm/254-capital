@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Upload, Info } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const LoanApplicationForm = () => {
+  const { ref, isVisible } = useScrollAnimation();
   const [formData, setFormData] = useState({
     name: '',
     idNumber: '',
@@ -190,7 +192,7 @@ const LoanApplicationForm = () => {
       case 'documents':
         return (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+            <div className="mt-4 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-[#48A7A7] transition-colors duration-200 ease-in-out hover:shadow-sm">
               <Upload className="h-12 w-12 mx-auto text-gray-400 mb-2" />
               <h4 className="text-lg font-medium text-gray-900 mb-1">Upload Your Documents</h4>
               <p className="text-sm text-gray-500 mb-4">
@@ -226,48 +228,46 @@ const LoanApplicationForm = () => {
   };
 
   return (
-    <div className="bg-white">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Apply for a Loan</h2>
-        <p className="text-gray-700 mb-6">
+    <div 
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className="w-full"
+    >
+      <div className="mb-6">
+        <h2 className={`text-2xl font-bold text-gray-900 mb-6 transition-opacity duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Apply for a Loan</h2>
+        <p className={`text-gray-700 mb-6 transition-opacity duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{transitionDelay: '0.05s'}}>
           Complete the form below to apply for financing. Our team will review your application and contact you within 24 hours.  
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Tabs */}
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
-              <button
-                type="button"
-                onClick={() => setActiveTab('personal')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'personal' ? 'border-[#48A7A7] text-[#15133F]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
-              >
-                Personal Information
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('loan')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'loan' ? 'border-[#48A7A7] text-[#15133F]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
-              >
-                Loan Details
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('documents')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'documents' ? 'border-[#48A7A7] text-[#15133F]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
-              >
-                Documents
-              </button>
-            </nav>
+        <form onSubmit={handleSubmit} className={`space-y-6 transition-opacity duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{transitionDelay: '0.1s'}}>
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200 mb-6">
+            <button
+              className={`py-2 px-4 font-medium transition-colors duration-200 ease-in-out ${activeTab === 'personal' ? 'text-[#48A7A7] border-b-2 border-[#48A7A7]' : 'text-gray-500 hover:text-[#48A7A7]'}`}
+              onClick={() => setActiveTab('personal')}
+            >
+              Personal Information
+            </button>
+            <button
+              className={`py-2 px-4 font-medium transition-colors duration-200 ease-in-out ${activeTab === 'loan' ? 'text-[#48A7A7] border-b-2 border-[#48A7A7]' : 'text-gray-500 hover:text-[#48A7A7]'}`}
+              onClick={() => setActiveTab('loan')}
+            >
+              Loan Details
+            </button>
+            <button
+              className={`py-2 px-4 font-medium transition-colors duration-200 ease-in-out ${activeTab === 'documents' ? 'text-[#48A7A7] border-b-2 border-[#48A7A7]' : 'text-gray-500 hover:text-[#48A7A7]'}`}
+              onClick={() => setActiveTab('documents')}
+            >
+              Documents
+            </button>
           </div>
 
           {/* Tab Content */}
-          <div className="py-4">
+          <div className="py-4 transition-opacity duration-200 ease-out">
             {renderTabContent()}
           </div>
           
           {/* Custom Loan Message */}
-          <div className="bg-gray-50 p-4 rounded-md">
+          <div className="bg-gray-50 p-4 rounded-md transition-all duration-200 ease-out hover:shadow-sm">
             <p className="text-gray-700">
               Need a custom loan? Email us at:{' '}
               <a href="mailto:loans@254-capital.com" className="text-[#48A7A7] hover:underline">
@@ -310,7 +310,7 @@ const LoanApplicationForm = () => {
                 type="button" 
                 onClick={() => setActiveTab(activeTab === 'loan' ? 'personal' : 'loan')}
                 variant="outline"
-                className="px-6 py-2 border border-[#48A7A7] text-[#48A7A7] rounded-md hover:bg-[#48A7A7]/10"
+                className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ease-in-out hover:shadow-sm"
               >
                 Previous
               </Button>
@@ -320,7 +320,7 @@ const LoanApplicationForm = () => {
               <Button 
                 type="button" 
                 onClick={() => setActiveTab(activeTab === 'personal' ? 'loan' : 'documents')}
-                className="ml-auto px-6 py-2 bg-[#15133F] text-white rounded-md hover:bg-[#15133F]/90"
+                className="ml-auto bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm transition-all duration-200 ease-in-out hover:shadow-sm"
               >
                 Next
               </Button>
@@ -328,7 +328,7 @@ const LoanApplicationForm = () => {
               <Button 
                 type="submit" 
                 disabled={!formData.agreeToTerms}
-                className="ml-auto px-6 py-2 bg-[#15133F] text-white rounded-md hover:bg-[#15133F]/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="ml-auto bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out hover:shadow-sm"
               >
                 Submit Application
               </Button>

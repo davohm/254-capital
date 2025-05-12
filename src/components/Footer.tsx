@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [hasAnimated, setHasAnimated] = useState(false);
+  
+  // Use localStorage to track if the initial animation has played across page navigations
+  useEffect(() => {
+    const hasInitialAnimationPlayed = localStorage.getItem('footerAnimationPlayed');
+    if (hasInitialAnimationPlayed) {
+      setHasAnimated(true);
+    } else {
+      // Set after a small delay to ensure animation plays properly
+      const timer = setTimeout(() => {
+        localStorage.setItem('footerAnimationPlayed', 'true');
+        setHasAnimated(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,88 +31,106 @@ const Footer = () => {
 
   const currentYear = new Date().getFullYear();
 
+  const quickLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'About Us', path: '/about-us' },
+    { name: 'FAQs', path: '/faqs' },
+    { name: 'Contact Us', path: '/contacts' },
+    { name: 'Privacy Policy', path: '/privacy-policy' },
+    { name: 'Terms & Conditions', path: '/terms' }
+  ];
+
+  const contactInfo = [
+    { icon: <MapPin size={18} className="text-[#48A7A7] flex-shrink-0 mt-1" />, text: 'IPS Building, 7th Floor Nairobi, Kenya', link: null },
+    { icon: <Phone size={18} className="text-[#48A7A7] flex-shrink-0" />, text: '+254 700 123 456', link: 'tel:+254700123456' },
+    { icon: <Mail size={18} className="text-[#48A7A7] flex-shrink-0" />, text: 'info@254-capital.com', link: 'mailto:info@254-capital.com' }
+  ];
+
+  const socialLinks = [
+    { icon: <Facebook size={20} />, link: '#' },
+    { icon: <Twitter size={20} />, link: '#' },
+    { icon: <Instagram size={20} />, link: '#' },
+    { icon: <Linkedin size={20} />, link: '#' }
+  ];
+
   return (
-    <footer className="bg-[#15133F] text-white pt-16 pb-8">
+    <footer className={`bg-[#15133F] text-white pt-16 pb-8 ${!hasAnimated ? 'animate-fade-in' : ''}`}>
       <div className="container mx-auto px-4 md:px-6">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Logo and About */}
-          <div className="space-y-4">
-            <Link to="/" className="inline-block">
+          <div className={`space-y-4 ${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.1s'} : {}}>
+            <Link to="/" className="inline-block hover-lift transition-transform duration-300">
               <img 
                 src="/254-capital-logo.jpg" 
                 alt="254 Capital" 
-                className="h-12 w-auto bg-white rounded-md p-1" 
+                className="h-12 w-auto bg-white rounded-md p-1 transition-transform duration-300 hover:scale-105" 
               />
             </Link>
             <p className="text-gray-300 mt-4">
               254 Capital provides innovative financial solutions to help businesses grow through supply chain financing, bridging loans, and more.
             </p>
             <div className="flex space-x-4 pt-2">
-              <a href="#" className="text-gray-300 hover:text-[#48A7A7] transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#48A7A7] transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#48A7A7] transition-colors">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#48A7A7] transition-colors">
-                <Linkedin size={20} />
-              </a>
+              {socialLinks.map((social, index) => (
+                <a 
+                  key={index} 
+                  href={social.link} 
+                  className="text-gray-300 hover:text-[#48A7A7] transition-colors duration-300 hover-scale"
+                  style={!hasAnimated ? {animationDelay: `${index * 0.05 + 0.2}s`} : {}}
+                >
+                  {social.icon}
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Column 2: Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7]">Quick Links</h3>
+          <div className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.2s'} : {}}>
+            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7] transition-colors duration-300 hover:text-white">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-300 hover:text-white transition-colors">Services</Link>
-              </li>
-              <li>
-                <Link to="/about-us" className="text-gray-300 hover:text-white transition-colors">About Us</Link>
-              </li>
-              <li>
-                <Link to="/faqs" className="text-gray-300 hover:text-white transition-colors">FAQs</Link>
-              </li>
-              <li>
-                <Link to="/contacts" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link>
-              </li>
-              <li>
-                <Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link to="/terms" className="text-gray-300 hover:text-white transition-colors">Terms & Conditions</Link>
-              </li>
+              {quickLinks.slice(0, 5).map((link, index) => (
+                <li key={index} className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: `${index * 0.05 + 0.3}s`} : {}}>
+                  <Link to={link.path} className="text-gray-300 hover:text-white transition-colors duration-300 relative group inline-block">
+                    {link.name}
+                    <span className="absolute left-0 bottom-0 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </li>
+              ))}
+              {quickLinks.slice(5).map((link, index) => (
+                <li key={index + 5} className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: `${(index + 5) * 0.05 + 0.3}s`} : {}}>
+                  <Link to={link.path} className="text-gray-300 hover:text-white transition-colors duration-300 relative group inline-block">
+                    {link.name}
+                    <span className="absolute left-0 bottom-0 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Column 3: Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7]">Contact Us</h3>
+          <div className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.3s'} : {}}>
+            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7] transition-colors duration-300 hover:text-white">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex items-start space-x-3">
-                <MapPin size={18} className="text-[#48A7A7] flex-shrink-0 mt-1" />
-                <span className="text-gray-300">IPS Building, 7th Floor Nairobi, Kenya</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <Phone size={18} className="text-[#48A7A7] flex-shrink-0" />
-                <a href="tel:+254700123456" className="text-gray-300 hover:text-white transition-colors">+254 700 123 456</a>
-              </li>
-              <li className="flex items-center space-x-3">
-                <Mail size={18} className="text-[#48A7A7] flex-shrink-0" />
-                <a href="mailto:info@254-capital.com" className="text-gray-300 hover:text-white transition-colors">info@254-capital.com</a>
-              </li>
+              {contactInfo.map((item, index) => (
+                <li 
+                  key={index} 
+                  className={`flex items-${index === 0 ? 'start' : 'center'} space-x-3 ${!hasAnimated ? 'animate-slide-in' : ''} hover-lift transition-transform duration-300`}
+                  style={!hasAnimated ? {animationDelay: `${index * 0.1 + 0.4}s`} : {}}
+                >
+                  {item.icon}
+                  {item.link ? (
+                    <a href={item.link} className="text-gray-300 hover:text-white transition-colors duration-300">{item.text}</a>
+                  ) : (
+                    <span className="text-gray-300">{item.text}</span>
+                  )}
+                </li>
+              ))}
             </ul>
-            <div className="mt-6">
+            <div className={`mt-6 ${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.7s'} : {}}>
               <Button 
                 onClick={() => window.location.href = '/contacts'}
-                className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm"
+                className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm hover-lift transition-transform duration-300"
               >
                 Get In Touch
               </Button>
@@ -104,36 +138,36 @@ const Footer = () => {
           </div>
 
           {/* Column 4: Newsletter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7]">Newsletter</h3>
+          <div className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.4s'} : {}}>
+            <h3 className="text-lg font-semibold mb-4 text-[#48A7A7] transition-colors duration-300 hover:text-white">Newsletter</h3>
             <p className="text-gray-300 mb-4">
               Subscribe to our newsletter to receive updates on our services, offers, and financial tips.
             </p>
-            <form onSubmit={handleSubscribe} className="space-y-3">
-              <div className="flex">
+            <form onSubmit={handleSubscribe} className={`space-y-3 group ${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.5s'} : {}}>
+              <div className="flex hover-shadow transition-all duration-300">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   required
-                  className="flex-grow px-4 py-2 bg-[#15133F]/80 border border-gray-600 rounded-l-md focus:outline-none focus:ring-1 focus:ring-[#48A7A7] text-white"
+                  className="flex-grow px-4 py-2 bg-[#15133F]/80 border border-gray-600 rounded-l-md focus:outline-none focus:ring-1 focus:ring-[#48A7A7] text-white transition-all duration-300 focus:border-[#48A7A7]"
                 />
                 <button
                   type="submit"
-                  className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white px-3 rounded-r-md flex items-center justify-center"
+                  className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white px-3 rounded-r-md flex items-center justify-center transition-colors duration-300"
                 >
-                  <ArrowRight size={18} />
+                  <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
               <p className="text-xs text-gray-400">
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </form>
-            <div className="mt-6">
+            <div className="mt-6 animate-slide-in" style={{animationDelay: '0.6s'}}>
               <Button 
                 onClick={() => window.open('/apply', '_blank')}
-                className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium"
+                className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium hover-lift transition-transform duration-300"
               >
                 Apply For Financing
               </Button>
@@ -142,21 +176,21 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 my-8"></div>
+        <div className="border-t border-gray-700 my-8 animate-fade-in" style={{animationDelay: '0.7s'}}></div>
 
         {/* Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm animate-fade-in" style={{animationDelay: '0.8s'}}>
           <p>© {currentYear} 254 Capital. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6">
               <li>
-                <Link to="/privacy-policy" className="hover:text-[#48A7A7] transition-colors">Privacy Policy</Link>
+                <Link to="/privacy-policy" className="hover:text-[#48A7A7] transition-colors duration-300 hover-lift">Privacy Policy</Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-[#48A7A7] transition-colors">Terms of Service</Link>
+                <Link to="/terms" className="hover:text-[#48A7A7] transition-colors duration-300 hover-lift">Terms of Service</Link>
               </li>
               <li>
-                <Link to="/cookies" className="hover:text-[#48A7A7] transition-colors">Cookie Policy</Link>
+                <Link to="/cookies" className="hover:text-[#48A7A7] transition-colors duration-300 hover-lift">Cookie Policy</Link>
               </li>
             </ul>
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { X, Info, Calculator } from 'lucide-react';
 import ModalPortal from './ModalPortal';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface LoanCalculatorProps {
   isOpen: boolean;
@@ -124,8 +125,9 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
 
   return (
     <ModalPortal isOpen={isOpen}>
-      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-auto max-h-[90vh] my-4">
+      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm z-[9999] animate-fade-in" style={{animationDuration: '0.3s'}}>
+        <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-auto max-h-[90vh] my-4 animate-fade-in" style={{animationDuration: '0.3s', animationDelay: '0.1s'}}>
+
           {/* Header */}
           <div className="bg-emerald-600 p-6 text-white">
             <div className="flex justify-between items-center">
@@ -145,10 +147,12 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
 
           {/* Calculator Body */}
           <div className="p-6 space-y-6">
+
             {/* Input Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column - Inputs */}
               <div className="space-y-6">
+
                 {/* Loan Type */}
                 <div>
                   <label htmlFor="loanType" className="block text-sm font-medium text-gray-700 mb-2">
@@ -220,12 +224,14 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
               </div>
 
               {/* Right Column - Results */}
-              <div className="bg-gray-50 p-6 rounded-xl space-y-6 border border-gray-100">
+              <div className="bg-gray-50 p-6 rounded-xl space-y-6 border border-gray-100 transition-all duration-200 ease-out hover:shadow-sm">
+
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Loan Summary</h3>
                   
                   {/* Monthly Payment - Highlighted */}
-                  <div className="bg-[#48A7A7]/10 p-4 rounded-lg border border-[#48A7A7]/20 mb-6">
+                  <div className="bg-[#48A7A7]/10 p-4 rounded-lg border border-[#48A7A7]/20 mb-6 transition-all duration-200 ease-in-out hover:shadow-sm">
+
                     <p className="text-sm font-medium text-[#15133F]">Monthly Payment</p>
                     <p className="text-3xl font-bold text-[#48A7A7]">
                       {formatCurrency(loanDetails.monthlyPayment)}
@@ -259,7 +265,8 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
             </div>
             
             {/* Special Notes */}
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 transition-all duration-200 ease-out hover:shadow-sm">
+
               <div className="flex gap-3">
                 <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div>
@@ -274,10 +281,11 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
             
             {/* Action Buttons - Fixed at the bottom */}
             <div className="sticky bottom-0 left-0 right-0 bg-white pt-2 pb-4 space-y-3 border-t border-gray-100 mt-4">
+
               <Button 
                 onClick={handleProceedToApplication}
                 disabled={!!error || loanAmount < 1000}
-                className="w-full bg-[#15133F] hover:bg-[#15133F]/90 text-white font-medium py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out hover:shadow-sm"
               >
                 Apply Now
               </Button>
@@ -285,7 +293,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ isOpen, onClose, openLo
                 onClick={handleKeepCalculator}
                 disabled={!!error || loanAmount < 1000}
                 variant="outline"
-                className="w-full border-[#48A7A7] text-[#48A7A7] hover:bg-[#48A7A7]/10 font-medium py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out hover:shadow-sm"
               >
                 Loan Calculator
               </Button>
