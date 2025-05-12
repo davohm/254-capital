@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Upload, Info } from 'lucide-react';
+import { Upload, Info, CheckCircle } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { createLoanApplication } from '../lib/loanApplicationsDb';
+import { sendEmail, generateLoanApplicationEmail } from '../lib/emailService';
+import { formatCurrency } from '../utils/formatters';
 
 const LoanApplicationForm = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -16,6 +19,11 @@ const LoanApplicationForm = () => {
     message: '',
     agreeToTerms: false
   });
+
+  const [documents, setDocuments] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [applicationId, setApplicationId] = useState('');
 
   const [activeTab, setActiveTab] = useState('personal');
 
@@ -53,11 +61,78 @@ const LoanApplicationForm = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const fileList = Array.from(e.target.files);
+      setDocuments(prev => [...prev, ...fileList]);
+    }
+  };
+
+  const removeDocument = (index: number) => {
+    setDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    alert('Loan application submitted successfully! Our team will contact you shortly.');
+    setIsSubmitting(true);
+    
+    try {
+      // Convert documents to base64 strings if needed
+      const documentPromises = documents.map(file => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+      
+      const documentStrings = await Promise.all(documentPromises);
+      
+      // Create the loan application in the database
+      const newApplication = createLoanApplication({
+        ...formData,
+        documents: documentStrings,
+        amountValue: parseFloat(formData.amount.replace(/[^0-9.-]+/g, '')) || 0
+      });
+      
+      // Send confirmation email
+      await sendEmail(generateLoanApplicationEmail(
+        formData.name,
+        formData.email,
+        formData.loanType,
+        formatCurrency(parseFloat(formData.amount) || 0),
+        newApplication.id
+      ));
+      
+      // Reset form and show success message
+      setApplicationId(newApplication.id);
+      setIsSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          idNumber: '',
+          email: '',
+          phone: '',
+          loanType: '',
+          amount: '',
+          securityType: '',
+          message: '',
+          agreeToTerms: false
+        });
+        setDocuments([]);
+        setActiveTab('personal');
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting loan application:', error);
+      alert('There was an error submitting your application. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderTabContent = () => {
@@ -192,33 +267,60 @@ const LoanApplicationForm = () => {
       case 'documents':
         return (
           <div className="space-y-4">
-            <div className="mt-4 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-[#48A7A7] transition-colors duration-200 ease-in-out hover:shadow-sm">
-              <Upload className="h-12 w-12 mx-auto text-gray-400 mb-2" />
-              <h4 className="text-lg font-medium text-gray-900 mb-1">Upload Your Documents</h4>
-              <p className="text-sm text-gray-500 mb-4">
-                Drag and drop files here, or click to browse. You can upload multiple documents at once.
-              </p>
-              <div className="bg-blue-50 p-3 rounded-md text-sm text-blue-700 flex items-start mt-4 mb-4">
-                <Info className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium">Required documents:</p>
-                  <ul className="list-disc list-inside mt-1 space-y-1">
-                    <li>National ID or Passport</li>
-                    <li>Security document (based on selected security type)</li>
-                    <li>Any additional supporting documents</li>
+            <div className="border-2 border-dashed border-gray-300 rounded-md p-6 flex flex-col items-center justify-center">
+              <div className="text-center">
+                <Upload className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-sm text-gray-600 mb-1">Drag and drop your documents here, or click to browse</p>
+                <p className="text-xs text-gray-500 mb-4">Accepted file types: PDF, JPG, PNG (Max 5MB each)</p>
+              </div>
+              <label className="cursor-pointer bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium border border-gray-300 inline-flex items-center">
+                <Upload size={16} className="mr-2" />
+                Upload Documents
+                <input 
+                  type="file" 
+                  multiple 
+                  className="hidden" 
+                  onChange={handleFileChange}
+                  accept=".pdf,.jpg,.jpeg,.png"
+                />
+              </label>
+            </div>
+            
+            {/* Uploaded documents list */}
+            {documents.length > 0 && (
+              <div className="mt-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">Uploaded Documents:</h4>
+                <ul className="space-y-2">
+                  {documents.map((file, index) => (
+                    <li key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+                      <span className="text-sm text-gray-700 truncate flex-1">{file.name}</span>
+                      <span className="text-xs text-gray-500 mx-2">{(file.size / 1024).toFixed(0)} KB</span>
+                      <button 
+                        type="button" 
+                        onClick={() => removeDocument(index)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            <div className="bg-gray-50 p-4 rounded-md">
+              <div className="flex items-start">
+                <Info size={16} className="text-[#48A7A7] mt-0.5 mr-2 flex-shrink-0" />
+                <div className="text-sm text-gray-600">
+                  <p className="font-medium mb-1">Required Documents:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Copy of ID/Passport</li>
+                    <li>Proof of security (title deed, logbook, etc.)</li>
+                    <li>Bank statements (last 6 months)</li>
+                    <li>Any other supporting documents</li>
                   </ul>
                 </div>
               </div>
-              <input
-                type="file"
-                multiple
-                className="w-full text-sm text-gray-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-full file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-emerald-50 file:text-emerald-700
-                  hover:file:bg-emerald-100"
-              />
             </div>
           </div>
         );
@@ -303,6 +405,24 @@ const LoanApplicationForm = () => {
             </div>
           </div>
           
+          {/* Success message */}
+          {isSubmitted && (
+            <div className="bg-green-50 border border-green-200 rounded-md p-4 mt-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <CheckCircle className="h-5 w-5 text-green-400" aria-hidden="true" />
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-green-800">Application Submitted Successfully</h3>
+                  <div className="mt-2 text-sm text-green-700">
+                    <p>Your application (ID: {applicationId}) has been received. We will review it and get back to you shortly.</p>
+                    <p className="mt-1">A confirmation email has been sent to {formData.email}.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
           {/* Navigation Buttons */}
           <div className="pt-4 flex justify-between">
             {activeTab !== 'personal' && (
@@ -311,6 +431,7 @@ const LoanApplicationForm = () => {
                 onClick={() => setActiveTab(activeTab === 'loan' ? 'personal' : 'loan')}
                 variant="outline"
                 className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ease-in-out hover:shadow-sm"
+                disabled={isSubmitting}
               >
                 Previous
               </Button>
@@ -321,16 +442,17 @@ const LoanApplicationForm = () => {
                 type="button" 
                 onClick={() => setActiveTab(activeTab === 'personal' ? 'loan' : 'documents')}
                 className="ml-auto bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm transition-all duration-200 ease-in-out hover:shadow-sm"
+                disabled={isSubmitting}
               >
                 Next
               </Button>
             ) : (
               <Button 
                 type="submit" 
-                disabled={!formData.agreeToTerms}
-                className="ml-auto bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out hover:shadow-sm"
+                disabled={!formData.agreeToTerms || isSubmitting}
+                className="ml-auto bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out hover:shadow-sm flex items-center"
               >
-                Submit Application
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </Button>
             )}
           </div>

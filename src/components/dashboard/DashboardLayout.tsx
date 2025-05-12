@@ -12,7 +12,8 @@ import {
   HelpCircle, 
   Menu, 
   X,
-  ChevronRight
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -124,6 +125,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <p className="text-xs text-gray-500 truncate">{user?.email || ''}</p>
             </div>
           </div>
+          <Link 
+            to="/"
+            className="w-full bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm flex items-center justify-center space-x-2 mb-3"
+          >
+            <ExternalLink size={16} />
+            <span>Back to Website</span>
+          </Link>
           <Button
             onClick={handleSignOut}
             disabled={loading}
@@ -248,6 +256,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
+              <Link 
+                to="/" 
+                className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm flex items-center gap-2"
+              >
+                <ExternalLink size={16} />
+                Back to Website
+              </Link>
               <button className="text-gray-500 hover:text-gray-700 focus:outline-none relative">
                 <Bell size={20} />
                 <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>

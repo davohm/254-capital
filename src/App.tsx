@@ -24,6 +24,8 @@ import ResetPassword from "./pages/ResetPassword";
 // Protected pages
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/dashboard/Applications";
+import ApplicationDetail from "./pages/dashboard/ApplicationDetail";
+import ApplicationEdit from "./pages/dashboard/ApplicationEdit";
 import Team from "./pages/dashboard/Team";
 import Settings from "./pages/dashboard/Settings";
 
@@ -79,6 +81,8 @@ const App = () => (
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/applications" element={<Applications />} />
+              <Route path="/dashboard/applications/:id" element={<ApplicationDetail />} />
+              <Route path="/dashboard/applications/edit/:id" element={<ApplicationEdit />} />
               <Route path="/dashboard/team" element={<Team />} />
               <Route path="/dashboard/notifications" element={<Notifications />} />
               <Route path="/dashboard/settings" element={<Settings />} />
