@@ -6,7 +6,11 @@ import { createLoanApplication } from '../lib/loanApplicationsDb';
 import { sendEmail, generateLoanApplicationEmail } from '../lib/emailService';
 import { formatCurrency } from '../utils/formatters';
 
-const LoanApplicationForm = () => {
+interface LoanApplicationFormProps {
+  onSuccess?: () => void;
+}
+
+const LoanApplicationForm: React.FC<LoanApplicationFormProps> = ({ onSuccess }) => {
   const { ref, isVisible } = useScrollAnimation();
   const [formData, setFormData] = useState({
     name: '',
@@ -110,7 +114,7 @@ const LoanApplicationForm = () => {
       setApplicationId(newApplication.id);
       setIsSubmitted(true);
       
-      // Reset form after 5 seconds
+      // Reset form after 3 seconds and call onSuccess if provided
       setTimeout(() => {
         setFormData({
           name: '',
@@ -126,7 +130,11 @@ const LoanApplicationForm = () => {
         setDocuments([]);
         setActiveTab('personal');
         setIsSubmitted(false);
-      }, 5000);
+        
+        if (onSuccess) {
+          onSuccess();
+        }
+      }, 3000);
     } catch (error) {
       console.error('Error submitting loan application:', error);
       alert('There was an error submitting your application. Please try again.');

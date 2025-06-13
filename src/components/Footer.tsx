@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -47,12 +47,7 @@ const Footer = () => {
     { icon: <Mail size={18} className="text-[#48A7A7] flex-shrink-0" />, text: 'info@254-capital.com', link: 'mailto:info@254-capital.com' }
   ];
 
-  const socialLinks = [
-    { icon: <Facebook size={20} />, link: '#' },
-    { icon: <Twitter size={20} />, link: '#' },
-    { icon: <Instagram size={20} />, link: '#' },
-    { icon: <Linkedin size={20} />, link: '#' }
-  ];
+
 
   return (
     <footer className={`bg-[#15133F] text-white pt-16 pb-8 ${!hasAnimated ? 'animate-fade-in' : ''}`}>
@@ -71,18 +66,7 @@ const Footer = () => {
             <p className="text-gray-300 mt-4">
               254 Capital provides innovative financial solutions to help businesses grow through supply chain financing, bridging loans, and more.
             </p>
-            <div className="flex space-x-4 pt-2">
-              {socialLinks.map((social, index) => (
-                <a 
-                  key={index} 
-                  href={social.link} 
-                  className="text-gray-300 hover:text-[#48A7A7] transition-colors duration-300 hover-scale"
-                  style={!hasAnimated ? {animationDelay: `${index * 0.05 + 0.2}s`} : {}}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+
           </div>
 
           {/* Column 2: Quick Links */}
@@ -164,14 +148,7 @@ const Footer = () => {
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </form>
-            <div className="mt-6 animate-slide-in" style={{animationDelay: '0.6s'}}>
-              <Button 
-                onClick={() => window.open('/apply', '_blank')}
-                className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium hover-lift transition-transform duration-300"
-              >
-                Apply For Financing
-              </Button>
-            </div>
+
           </div>
         </div>
 

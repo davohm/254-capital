@@ -1,15 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import LoanCalculator from './LoanCalculator';
-import LoanApplicationForm from './LoanApplicationForm';
-import ModalPortal from './ModalPortal';
-import { Play, X } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-  const [isLoanApplicationOpen, setIsLoanApplicationOpen] = useState(false);
   const { ref, isVisible } = useScrollAnimation();
   
   // For hero section, we want it to be visible immediately on page load
@@ -24,23 +19,7 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
   
-  const openCalculator = () => {
-    setIsCalculatorOpen(true);
-    setIsLoanApplicationOpen(false);
-  };
-  
-  const closeCalculator = () => {
-    setIsCalculatorOpen(false);
-  };
-  
-  const openLoanApplication = () => {
-    setIsLoanApplicationOpen(true);
-    setIsCalculatorOpen(false);
-  };
-  
-  const closeLoanApplication = () => {
-    setIsLoanApplicationOpen(false);
-  };
+
   
   // For hero section, we want it visible immediately
   const shouldShow = true; // Hero should always be visible as it's at the top
@@ -67,52 +46,19 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-white/80 mb-8 max-w-md text-base animate-fade-in" style={{animationDuration: '0.7s', animationDelay: '0.2s'}}>
-          At 254-Capital, we simplify access to credit so you can grow your business
-          manage emergencies, and achieve financial - <b>without the hassle.</b>
+          At 254-Capital, we simplify access to credit so you can grow your business,
+          achieve financial security and freedom - <b>without the hassle.</b>
         </p>
         
-        <div className="flex items-center space-x-6 mb-[70px] animate-fade-in" style={{animationDuration: '0.7s', animationDelay: '0.3s'}}>
+        <div className="flex items-center mb-[70px] animate-fade-in" style={{animationDuration: '0.7s', animationDelay: '0.3s'}}>
           <Button 
-            onClick={openCalculator}
-            className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out hover:shadow-md"
-          >
-            Loan Calculator
-          </Button>
-          <Button 
-            onClick={openLoanApplication}
+            asChild
             className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm transition-all duration-300 ease-in-out hover:shadow-md"
           >
-            Apply Now
+            <Link to="/contacts">Apply Now</Link>
           </Button>
         </div>
-        
-        {/* Loan Calculator Modal */}
-        <LoanCalculator 
-          isOpen={isCalculatorOpen} 
-          onClose={closeCalculator} 
-          openLoanApplication={openLoanApplication} 
-        />
-        
-        {/* Loan Application Modal */}
-        <ModalPortal isOpen={isLoanApplicationOpen}>
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm z-[9999] animate-fade-in" style={{animationDuration: '0.3s'}}>
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-auto max-h-[90vh] my-4 animate-fade-in" style={{animationDuration: '0.4s', animationDelay: '0.1s'}}>
-              <div className="bg-[#15133F] p-6 text-white flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Loan Application</h2>
-                <button 
-                  onClick={closeLoanApplication}
-                  className="text-white hover:text-[#48A7A7] transition-colors duration-200 hover-scale"
-                  aria-label="Close"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-              <div className="p-6">
-                <LoanApplicationForm />
-              </div>
-            </div>
-          </div>
-        </ModalPortal>
+
       </div>
     </section>
   );

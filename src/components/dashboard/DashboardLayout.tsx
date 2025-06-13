@@ -7,9 +7,7 @@ import {
   Home, 
   FileSpreadsheet, 
   Users, 
-  Bell, 
   Settings, 
-  HelpCircle, 
   Menu, 
   X,
   ChevronRight,
@@ -45,9 +43,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     { name: 'Dashboard', href: '/dashboard', icon: <Home size={20} /> },
     { name: 'Loan Applications', href: '/dashboard/applications', icon: <FileSpreadsheet size={20} /> },
     { name: 'Team', href: '/dashboard/team', icon: <Users size={20} /> },
-    { name: 'Notifications', href: '/dashboard/notifications', icon: <Bell size={20} /> },
     { name: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} /> },
-    { name: 'Help & Support', href: '/dashboard/support', icon: <HelpCircle size={20} /> },
   ];
 
   // Function to toggle the sidebar
@@ -263,10 +259,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 <ExternalLink size={16} />
                 Back to Website
               </Link>
-              <button className="text-gray-500 hover:text-gray-700 focus:outline-none relative">
-                <Bell size={20} />
-                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
-              </button>
+
               <div className="hidden md:flex items-center">
                 <div className="h-8 w-8 rounded-full bg-[#48A7A7] flex items-center justify-center text-white font-semibold">
                   {user?.email?.charAt(0).toUpperCase() || 'U'}

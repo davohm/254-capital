@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { Link } from 'react-router-dom';
 
 interface FAQItem {
   question: string;
@@ -272,9 +273,10 @@ const FAQs: React.FC = () => {
 
           <div className={`mt-12 text-center transition-opacity duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.5s' }}>
             <Button 
+              asChild
               className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-6 py-3 text-sm transition-all duration-200 ease-in-out hover:shadow-md"
             >
-              Apply Now
+              <Link to="/contacts">Apply Now</Link>
             </Button>
             <p className="mt-4 text-sm text-gray-500">
               Get funded in as little as 4 hours

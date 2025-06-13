@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
-import LoanApplicationForm from './LoanApplicationForm';
-import ModalPortal from './ModalPortal';
-import { X } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { Link } from 'react-router-dom';
 
 const SupplyChainFinancing = () => {
-  const [isLoanApplicationOpen, setIsLoanApplicationOpen] = useState(false);
   const { ref, isVisible } = useScrollAnimation();
   
   const features = [
@@ -21,7 +18,7 @@ const SupplyChainFinancing = () => {
     },
     {
       title: "Flexible Financing Range",
-      description: "From KES 100,000 to KES 20M+ to match your needs.",
+      description: "Tailored financing solutions to match your business needs and scale.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#48A7A7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -48,13 +45,7 @@ const SupplyChainFinancing = () => {
     }
   ];
   
-  const openLoanApplication = () => {
-    setIsLoanApplicationOpen(true);
-  };
-  
-  const closeLoanApplication = () => {
-    setIsLoanApplicationOpen(false);
-  };
+
   
   return (
     <section 
@@ -95,36 +86,15 @@ const SupplyChainFinancing = () => {
               ))}
             </div>
             
-            <div className={`pt-6 flex items-center space-x-4 transition-all duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{transitionDelay: '0.5s'}}>
+            <div className={`pt-6 flex items-center transition-all duration-300 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{transitionDelay: '0.5s'}}>
               <Button 
-                onClick={openLoanApplication}
+                asChild
                 className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-4 py-2 text-sm transition-all duration-300 ease-in-out hover:shadow-md"
               >
-                Apply Now
+                <Link to="/contacts">Contact Us</Link>
               </Button>
-              <span className="text-[#48A7A7] font-medium">Get Funded In Hours</span>
             </div>
-            
-            {/* Loan Application Modal */}
-            <ModalPortal isOpen={isLoanApplicationOpen}>
-              <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm z-[9999] animate-fade-in">
-                <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-auto max-h-[90vh] my-4 animate-slide-in">
-                  <div className="bg-[#15133F] p-6 text-white flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">Loan Application</h2>
-                    <button 
-                      onClick={closeLoanApplication}
-                      className="text-white hover:text-[#48A7A7] transition-colors duration-200 hover-scale"
-                      aria-label="Close"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
-                  <div className="p-6">
-                    <LoanApplicationForm />
-                  </div>
-                </div>
-              </div>
-            </ModalPortal>
+
           </div>
           
           {/* Right side - Image */}

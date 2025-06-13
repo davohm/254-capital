@@ -6,7 +6,6 @@ import ServiceHighlights from '@/components/ServiceHighlights';
 import SupplyChainFinancing from '@/components/SupplyChainFinancing';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import QualifyingBusinesses from '@/components/QualifyingBusinesses';
-import TeamSection from '@/components/TeamSection';
 import PerformanceMetrics from '@/components/PerformanceMetrics';
 
 const Index = () => {
@@ -20,7 +19,6 @@ const Index = () => {
       <WhyChooseUs />
       <QualifyingBusinesses />
       <PerformanceMetrics />
-      <TeamSection />
     </Layout>
   );
 };

@@ -1,117 +1,49 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { Button } from "@/components/ui/button";
-import { Plus, Mail, Phone, MapPin, Edit, Trash2, X, Check, AlertCircle, Upload, Image } from 'lucide-react';
+import { Plus, Mail, Phone, MapPin, Edit, Trash2, X, Check, AlertCircle, Upload, Image, Loader2 } from 'lucide-react';
 import DashboardLayout from "../../components/dashboard/DashboardLayout";
 import { useNavigate } from 'react-router-dom';
+import { useToast } from "@/components/ui/use-toast";
+import { fetchTeamMembers, addTeamMember, updateTeamMember, deleteTeamMember, TeamMember } from '@/services/teamService';
 
-interface TeamMember {
-  id: number;
-  name: string;
-  position: string;
-  email: string;
-  phone: string;
-  location: string;
-  image: string;
-  department: string;
-}
+// TeamMember interface is now imported from teamService
 
 const Team = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
-  // Initial sample team member data
-  const initialTeamMembers: TeamMember[] = [
-    {
-      id: 1,
-      name: 'James Mwangi',
-      position: 'CEO & Founder',
-      email: 'james@254capital.com',
-      phone: '+254 712 345 678',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/men/32.jpg',
-      department: 'Executive'
-    },
-    {
-      id: 2,
-      name: 'Sarah Wanjiku',
-      position: 'Chief Financial Officer',
-      email: 'sarah@254capital.com',
-      phone: '+254 723 456 789',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/women/44.jpg',
-      department: 'Finance'
-    },
-    {
-      id: 3,
-      name: 'David Kamau',
-      position: 'Loan Officer',
-      email: 'david@254capital.com',
-      phone: '+254 734 567 890',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/men/46.jpg',
-      department: 'Operations'
-    },
-    {
-      id: 4,
-      name: 'Grace Akinyi',
-      position: 'Customer Relations Manager',
-      email: 'grace@254capital.com',
-      phone: '+254 745 678 901',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/women/65.jpg',
-      department: 'Customer Service'
-    },
-    {
-      id: 5,
-      name: 'Michael Omondi',
-      position: 'Risk Assessment Officer',
-      email: 'michael@254capital.com',
-      phone: '+254 756 789 012',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/men/36.jpg',
-      department: 'Risk Management'
-    },
-    {
-      id: 6,
-      name: 'Lucy Njeri',
-      position: 'Marketing Director',
-      email: 'lucy@254capital.com',
-      phone: '+254 767 890 123',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/women/22.jpg',
-      department: 'Marketing'
-    },
-    {
-      id: 7,
-      name: 'Peter Otieno',
-      position: 'IT Manager',
-      email: 'peter@254capital.com',
-      phone: '+254 778 901 234',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/men/67.jpg',
-      department: 'IT'
-    },
-    {
-      id: 8,
-      name: 'Faith Muthoni',
-      position: 'Legal Advisor',
-      email: 'faith@254capital.com',
-      phone: '+254 789 012 345',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/women/33.jpg',
-      department: 'Legal'
-    }
-  ];
-
-  // Load team members from localStorage or use initial data
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => {
-    const savedMembers = localStorage.getItem('teamMembers');
-    return savedMembers ? JSON.parse(savedMembers) : initialTeamMembers;
-  });
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [addingMember, setAddingMember] = useState(false);
+  const [updatingMember, setUpdatingMember] = useState(false);
+  const [deletingMember, setDeletingMember] = useState(false);
   
-  // Save team members to localStorage whenever they change
+  // Fetch team members from the API
   useEffect(() => {
-    localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
-  }, [teamMembers]);
+    const getTeamMembers = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchTeamMembers();
+        setTeamMembers(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching team members:', err);
+        setError('Failed to load team members. Please try again later.');
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to load team members",
+        });
+        // Initialize with empty array instead of failing completely
+        setTeamMembers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    getTeamMembers();
+  }, [toast]);
 
   // State for managing modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -178,75 +110,129 @@ const Team = () => {
   };
 
   // Handle adding a new team member
-  const handleAddMember = () => {
-    if (!newMember.name || !newMember.position || !newMember.email || !newMember.phone || !newMember.department) {
-      alert('Please fill in all required fields');
+  const handleAddMember = async () => {
+    if (!newMember.name || !newMember.position || !newMember.email) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: "Please fill in all required fields",
+      });
       return;
     }
+    try {
+      setAddingMember(true);
+      
+      // Prepare data for submission
+      const memberData = {
+        name: newMember.name || '',
+        position: newMember.position || '',
+        email: newMember.email || '',
+        phone: newMember.phone || '',
+        location: newMember.location || '',
+        image: imagePreview || newMember.image || 'https://randomuser.me/api/portraits/lego/1.jpg',
+        department: newMember.department || 'General'
+      };
+      
+      // Add team member via our local database
+      const addedMember = await addTeamMember(memberData);
+      
+      // Update local state
+      setTeamMembers(prev => [...prev, addedMember]);
+      
+      toast({
+        title: "Success",
+        description: "Team member added successfully",
+      });
+    } catch (err) {
+      console.error('Error adding team member:', err);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to add team member",
+      });
 
-    const id = teamMembers.length > 0 ? Math.max(...teamMembers.map(m => m.id)) + 1 : 1;
-    
-    const updatedMembers = [
-      ...teamMembers,
-      {
-        id,
-        name: newMember.name,
-        position: newMember.position,
-        email: newMember.email,
-        phone: newMember.phone,
-        location: newMember.location || 'Nairobi, Kenya',
-        image: newMember.image || 'https://randomuser.me/api/portraits/men/32.jpg',
-        department: newMember.department
-      } as TeamMember
-    ];
-    
-    setTeamMembers(updatedMembers);
-
-    // Reset form and close modal
-    setNewMember({
-      name: '',
-      position: '',
-      email: '',
-      phone: '',
-      location: 'Nairobi, Kenya',
-      image: 'https://randomuser.me/api/portraits/men/32.jpg',
-      department: ''
-    });
-    setImagePreview(null);
-    setIsAddModalOpen(false);
+    } finally {
+      setAddingMember(false);
+    }
   };
-  
+
   // Handle editing a team member
-  const handleEditMember = () => {
+  const handleEditMember = async () => {
     if (!currentMember) return;
     
-    const updatedMembers = teamMembers.map(member => 
-      member.id === currentMember.id ? currentMember : member
-    );
-    
-    setTeamMembers(updatedMembers);
-    setIsEditModalOpen(false);
-    setEditImagePreview(null);
-    setCurrentMember(null);
+    try {
+      setUpdatingMember(true);
+      
+      // Prepare data for submission
+      const updatedMember = {
+        ...currentMember,
+        image: editImagePreview || currentMember.image
+      };
+      
+      // Update team member via our local database
+      const result = await updateTeamMember(currentMember.id, updatedMember);
+      
+      // Update local state
+      const updatedMembers = teamMembers.map(member => 
+        member.id === currentMember.id ? result : member
+      );
+      setTeamMembers(updatedMembers);
+      
+      toast({
+        title: "Success",
+        description: "Team member updated successfully",
+      });
+    } catch (err) {
+      console.error('Error updating team member:', err);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update team member",
+      });
+
+    } finally {
+      setUpdatingMember(false);
+    }
   };
-  
+
   // Handle deleting a team member
-  const handleDeleteMember = () => {
-    if (!currentMember) return;
-    
-    const updatedMembers = teamMembers.filter(member => member.id !== currentMember.id);
-    setTeamMembers(updatedMembers);
-    setIsDeleteModalOpen(false);
-    setCurrentMember(null);
+  const handleDeleteMember = async () => {
+    try {
+      setDeletingMember(true);
+      
+      if (!currentMember) return;
+      
+      // Delete team member via our local database
+      await deleteTeamMember(currentMember.id);
+      
+      // Update local state
+      const updatedMembers = teamMembers.filter(member => member.id !== currentMember.id);
+      setTeamMembers(updatedMembers);
+      
+      toast({
+        title: "Success",
+        description: "Team member deleted successfully",
+      });
+    } catch (err) {
+      console.error('Error deleting team member:', err);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete team member",
+      });
+    } finally {
+      setDeletingMember(false);
+      setIsDeleteModalOpen(false);
+    }
   };
-  
+
   // Open edit modal with member data
   const openEditModal = (member: TeamMember) => {
     setCurrentMember(member);
     setEditImagePreview(member.image);
     setIsEditModalOpen(true);
   };
-  
+
   // Open delete confirmation modal
   const openDeleteModal = (member: TeamMember) => {
     setCurrentMember(member);
@@ -370,7 +356,19 @@ const Team = () => {
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-lg font-medium text-gray-900">Add Team Member</h3>
                   <button
-                    onClick={() => setIsAddModalOpen(false)}
+                    onClick={() => {
+                      setNewMember({
+                        name: '',
+                        position: '',
+                        email: '',
+                        phone: '',
+                        location: 'Nairobi, Kenya',
+                        image: 'https://randomuser.me/api/portraits/men/32.jpg',
+                        department: ''
+                      });
+                      setImagePreview(null);
+                      setIsAddModalOpen(false);
+                    }}
                     className="text-gray-400 hover:text-gray-500 focus:outline-none"
                   >
                     <X size={20} />
@@ -668,7 +666,7 @@ const Team = () => {
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <Button
-                  onClick={handleDeleteMember}
+                  onClick={() => handleDeleteMember()}
                   className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white rounded-md px-4 py-2 text-sm transition-all duration-200 ease-in-out hover:shadow-md flex items-center justify-center sm:ml-3"
                 >
                   <Trash2 size={16} className="mr-2" />

@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import FAQs from '../components/FAQs';
 import { Button } from "@/components/ui/button";
 import { Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FAQsPage: React.FC = () => {
   return (
@@ -47,16 +48,12 @@ const FAQsPage: React.FC = () => {
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
             Our team is ready to assist you with any questions about our supply chain financing solutions.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button 
+              asChild
               className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 text-white rounded-md px-6 py-3 text-sm transition-all duration-200 ease-in-out hover:shadow-md"
             >
-              Contact Us
-            </Button>
-            <Button 
-              className="bg-white hover:bg-gray-100 text-[#15133F] rounded-md px-6 py-3 text-sm transition-all duration-200 ease-in-out hover:shadow-md"
-            >
-              Apply Now
+              <Link to="/contacts">Contact Us</Link>
             </Button>
           </div>
         </div>
