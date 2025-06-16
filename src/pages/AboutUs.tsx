@@ -23,17 +23,29 @@ const AboutUs = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-[#15133F] mb-16 text-center">Our Leadership</h2>
           
-          {/* Team Member Card - Herbert */}
+          {/* Team Member 1 - Judy (Image on Left, Content on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
             {/* Image Column */}
             <div className="rounded-lg overflow-hidden shadow-xl">
               <img 
-                src="/herbert.JPG" 
-                alt="Herbert Wattanga" 
+                src="/user-placeholder.jpg" 
+                alt="Judy Wambui" 
                 className="w-full h-auto object-cover"
               />
             </div>
             
+            {/* Content Column */}
+            <div>
+              <h3 className="text-2xl font-bold text-[#15133F] mb-2">Judy Wambui</h3>
+              <p className="text-lg font-medium text-[#48A7A7] mb-6">Managing Director & Co-Founder</p>
+              <p className="text-gray-700 leading-relaxed">
+                Judy brings over 20 years of leadership in the International Development sector, with deep expertise in financial inclusion and community development. As Managing Director of 254 Capital, she drives the company's mission to unlock capital for underserved markets through scalable and impactful credit solutions.
+              </p>
+            </div>
+          </div>
+
+          {/* Team Member 2 - Herbert (Content on Left, Image on Right) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Herbert Wattanga</h3>
@@ -44,12 +56,30 @@ const AboutUs = () => {
                 presence and forge high-value partnerships aligned with long-term business goals.
               </p>
             </div>
+            
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/herbert.JPG" 
+                alt="Herbert Wattanga" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
 
-          {/* Team Member Card - George */}
+          {/* Team Member 3 - George (Image on Left, Content on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/george.jpeg" 
+                alt="George Gichuhi" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            
             {/* Content Column */}
-            <div className="order-2 md:order-1">
+            <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">George Gichuhi</h3>
               <p className="text-lg font-medium text-[#48A7A7] mb-6">Director of Supply Chain Financing</p>
               <p className="text-gray-700 leading-relaxed">
@@ -58,28 +88,10 @@ const AboutUs = () => {
                 and economic empowerment across key sectors.
               </p>
             </div>
-            
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl order-1 md:order-2">
-              <img 
-                src="/george.jpeg" 
-                alt="George Gichuhi" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
           </div>
 
-          {/* Team Member Card - Adan */}
+          {/* Team Member 4 - Adan (Content on Left, Image on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl bg-gray-100" style={{ minHeight: '300px' }}>
-              <div className="w-full h-full flex items-center justify-center">
-                <svg className="w-24 h-24 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-            </div>
-            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Adan Kalla</h3>
@@ -90,12 +102,30 @@ const AboutUs = () => {
                 that enhance operational efficiency and deliver seamless customer experiences.
               </p>
             </div>
+            
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/user-placeholder.jpg" 
+                alt="Adan Kalla" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
 
-          {/* Team Member Card - Janet */}
+          {/* Team Member 5 - Janet (Image on Left, Content on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/user-placeholder.jpg" 
+                alt="Janet Yiamoi" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            
             {/* Content Column */}
-            <div className="order-2 md:order-1">
+            <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Janet Yiamoi</h3>
               <p className="text-lg font-medium text-[#48A7A7] mb-6">Director of Fundraising and Investor Relations</p>
               <p className="text-gray-700 leading-relaxed">
@@ -105,28 +135,10 @@ const AboutUs = () => {
                 ensures we attract aligned capital to fuel sustainable growth.
               </p>
             </div>
-            
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl bg-gray-100 order-1 md:order-2" style={{ minHeight: '300px' }}>
-              <div className="w-full h-full flex items-center justify-center">
-                <svg className="w-24 h-24 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-            </div>
           </div>
 
-          {/* Team Member Card - David */}
+          {/* Team Member 6 - David (Content on Left, Image on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="/david-muema.jpg" 
-                alt="David Muema" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">David Muema</h3>
@@ -136,6 +148,15 @@ const AboutUs = () => {
                 financial modeling, credit evaluation, and portfolio research strengthens 254 Capital's
                 ability to make data-driven decisions and deliver measurable returns.
               </p>
+            </div>
+            
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/david-muema.jpg" 
+                alt="David Muema" 
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>

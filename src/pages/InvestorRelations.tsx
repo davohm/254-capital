@@ -259,14 +259,14 @@ const InvestorRelations = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Left Content */}
             <div>
-              <span className="inline-block px-4 py-1.5 bg-green-100 text-green-800 text-xs font-medium rounded-full mb-4">
+              <span className="inline-block px-4 py-1.5 bg-[#48A7A7]/10 text-[#48A7A7] text-xs font-medium rounded-full mb-4">
                 Ready to Make an Impact?
               </span>
               
               <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#15133F]">
                 Invest in Growth.
               </h2>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-green-500">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[#48A7A7]">
                 Fuel Africa's<br />Businesses
               </h2>
               
@@ -278,7 +278,7 @@ const InvestorRelations = () => {
               
               <div className="flex flex-wrap gap-5 mb-16">
                 <Link to="/contact">
-                  <Button size="lg" className="bg-green-500 hover:bg-green-600 shadow-sm px-6 py-6 text-base font-medium transition-all duration-300">
+                  <Button size="lg" className="bg-[#48A7A7] hover:bg-[#48A7A7]/90 shadow-sm px-6 py-6 text-base font-medium transition-all duration-300">
                     Start Investing
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -287,28 +287,26 @@ const InvestorRelations = () => {
               
               <div className="grid grid-cols-3 gap-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-green-500 mb-1">30-90 days</h3>
+                  <h3 className="text-2xl font-bold text-[#48A7A7] mb-1">30-90 days</h3>
                   <p className="text-sm text-gray-600">Deal Cycles</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-green-500 mb-1">Daily</h3>
+                  <h3 className="text-2xl font-bold text-[#48A7A7] mb-1">Daily</h3>
                   <p className="text-sm text-gray-600">New Opportunities</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-green-500 mb-1">100%</h3>
+                  <h3 className="text-2xl font-bold text-[#48A7A7] mb-1">100%</h3>
                   <p className="text-sm text-gray-600">Impact Visibility</p>
                 </div>
               </div>
             </div>
             
             {/* Right Content - Image */}
-            <div className="rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-              <img 
-                src="/herbert.JPG" 
-                alt="254 Capital leadership" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
+            <img 
+              src="/herbert.JPG" 
+              alt="254 Capital leadership" 
+              className="rounded-lg shadow-xl"
+            />
           </div>
         </div>
       </section>

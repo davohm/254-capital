@@ -22,7 +22,7 @@ const Services = () => {
       {/* Service Cards Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             {/* Card 1 - For Sellers */}
             <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 ease-out">
@@ -108,6 +108,52 @@ const Services = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Sacco Online Lending</h3>
               <p className="text-gray-600 mb-4">We provide capital to Saccos who then extend loans to their members, enhancing their lending capacity.</p>
               <p className="text-sm text-gray-500 italic mb-4">Empowering community financial institutions.</p>
+              <Link to="/contacts" className="text-[#48A7A7] font-medium flex items-center hover:underline">
+                Learn more
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
+            
+            {/* Card 5 - Salary Check Off loan */}
+            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 ease-out">
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 bg-[#48A7A7]/10 text-[#48A7A7] rounded-full text-sm font-medium">For Employees</span>
+              </div>
+              <div className="mb-4">
+                <div className="bg-[#48A7A7]/10 p-3 rounded-full w-12 h-12 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#48A7A7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Salary Check Off loan</h3>
+              <p className="text-gray-600 mb-4">Access affordable credit directly through your employer with automatic salary deductions for convenient repayment.</p>
+              <p className="text-sm text-gray-500 italic mb-4">Competitive rates for employed professionals.</p>
+              <Link to="/contacts" className="text-[#48A7A7] font-medium flex items-center hover:underline">
+                Learn more
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
+            
+            {/* Card 6 - Personal Unsecured loan */}
+            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 ease-out">
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 bg-[#48A7A7]/10 text-[#48A7A7] rounded-full text-sm font-medium">For Individuals</span>
+              </div>
+              <div className="mb-4">
+                <div className="bg-[#48A7A7]/10 p-3 rounded-full w-12 h-12 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#48A7A7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Personal Unsecured loan</h3>
+              <p className="text-gray-600 mb-4">Quick access to funds without collateral for personal needs, emergencies, or opportunities with flexible repayment options.</p>
+              <p className="text-sm text-gray-500 italic mb-4">Fast approval process with minimal documentation.</p>
               <Link to="/contacts" className="text-[#48A7A7] font-medium flex items-center hover:underline">
                 Learn more
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
