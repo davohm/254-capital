@@ -105,7 +105,7 @@ const Services = () => {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Sacco Online Lending</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">SACCO Onward Lending</h3>
               <p className="text-gray-600 mb-4">We provide capital to Saccos who then extend loans to their members, enhancing their lending capacity.</p>
               <p className="text-sm text-gray-500 italic mb-4">Empowering community financial institutions.</p>
               <Link to="/contacts" className="text-[#48A7A7] font-medium flex items-center hover:underline">

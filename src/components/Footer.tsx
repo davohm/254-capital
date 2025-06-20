@@ -43,7 +43,7 @@ const Footer = () => {
 
   const contactInfo = [
     { icon: <MapPin size={18} className="text-[#48A7A7] flex-shrink-0 mt-1" />, text: 'IPS Building, 7th Floor Nairobi, Kenya', link: null },
-    { icon: <Phone size={18} className="text-[#48A7A7] flex-shrink-0" />, text: '+254 783 064 273', link: 'tel:+254783064273' },
+    { icon: <Phone size={18} className="text-[#48A7A7] flex-shrink-0" />, text: '+254 742 064 270', link: 'tel:+254742064270' },
     { icon: <Mail size={18} className="text-[#48A7A7] flex-shrink-0" />, text: 'info@254-capital.com', link: 'mailto:info@254-capital.com' }
   ];
 

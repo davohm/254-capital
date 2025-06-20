@@ -70,7 +70,7 @@ const Contacts = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-[#15133F]">Phone</h3>
                   <p className="text-gray-600 mt-1">
-                    <a href="tel:+254783064273" className="hover:text-[#48A7A7] transition-colors">+254 783 064 273</a>
+                    <a href="tel:+254742064270" className="hover:text-[#48A7A7] transition-colors">+254 742 064 270</a>
                   </p>
                 </div>
               </div>

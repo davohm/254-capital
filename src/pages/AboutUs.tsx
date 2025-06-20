@@ -28,7 +28,7 @@ const AboutUs = () => {
             {/* Image Column */}
             <div className="rounded-lg overflow-hidden shadow-xl">
               <img 
-                src="/user-placeholder.jpg" 
+                src="/Judy.jpg" 
                 alt="Judy Wambui" 
                 className="w-full h-auto object-cover"
               />
