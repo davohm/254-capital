@@ -35,10 +35,9 @@ const Footer = () => {
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
     { name: 'About Us', path: '/about-us' },
+    { name: 'Investor Relations', path: '/investor-relations' },
     { name: 'FAQs', path: '/faqs' },
-    { name: 'Contact Us', path: '/contacts' },
-    { name: 'Privacy Policy', path: '/privacy-policy' },
-    { name: 'Terms & Conditions', path: '/terms' }
+    { name: 'Contacts', path: '/contacts' }
   ];
 
   const contactInfo = [
@@ -73,7 +72,7 @@ const Footer = () => {
           <div className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: '0.2s'} : {}}>
             <h3 className="text-lg font-semibold mb-4 text-[#48A7A7] transition-colors duration-300 hover:text-white">Quick Links</h3>
             <ul className="space-y-2">
-              {quickLinks.slice(0, 5).map((link, index) => (
+              {quickLinks.map((link, index) => (
                 <li key={index} className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: `${index * 0.05 + 0.3}s`} : {}}>
                   <Link to={link.path} className="text-gray-300 hover:text-white transition-colors duration-300 relative group inline-block">
                     {link.name}
@@ -81,14 +80,8 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
-              {quickLinks.slice(5).map((link, index) => (
-                <li key={index + 5} className={`${!hasAnimated ? 'animate-slide-in' : ''}`} style={!hasAnimated ? {animationDelay: `${(index + 5) * 0.05 + 0.3}s`} : {}}>
-                  <Link to={link.path} className="text-gray-300 hover:text-white transition-colors duration-300 relative group inline-block">
-                    {link.name}
-                    <span className="absolute left-0 bottom-0 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
-              ))}
+
+
             </ul>
           </div>
 
