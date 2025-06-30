@@ -71,17 +71,8 @@ const AboutUs = () => {
             </div>
           </div>
 
-          {/* Team Member 3 - Adan (Image on Left, Content on Right) */}
+          {/* Team Member 3 - Adan (Content on Left, Image on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="/user-placeholder.jpg" 
-                alt="Adan Kalla" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Adan Kalla</h3>
@@ -92,10 +83,28 @@ const AboutUs = () => {
                 that enhance operational efficiency and deliver seamless customer experiences.
               </p>
             </div>
+            
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/user-placeholder.jpg" 
+                alt="Adan Kalla" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
 
-          {/* Team Member 4 - Janet (Content on Left, Image on Right) */}
+          {/* Team Member 4 - Janet (Image on Left, Content on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/Janet.jpg" 
+                alt="Janet Yiamoi" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Janet Yiamoi</h3>
@@ -107,28 +116,10 @@ const AboutUs = () => {
                 ensures we attract aligned capital to fuel sustainable growth.
               </p>
             </div>
-            
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="/Janet.jpg" 
-                alt="Janet Yiamoi" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
           </div>
 
-          {/* Team Member 5 - Judy (Image on Left, Content on Right) */}
+          {/* Team Member 5 - Judy (Content on Left, Image on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="/Judy.jpg" 
-                alt="Judy Wambui" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">Judy Wambui</h3>
@@ -137,10 +128,28 @@ const AboutUs = () => {
                 Judy brings over 20 years of leadership in the International Development sector, with deep expertise in financial inclusion and community development. As Managing Director of 254 Capital, she drives the company's mission to unlock capital for underserved markets through scalable and impactful credit solutions.
               </p>
             </div>
+            
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/Judy.jpg" 
+                alt="Judy Wambui" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
 
-          {/* Team Member 6 - David (Content on Left, Image on Right) */}
+          {/* Team Member 6 - David (Image on Left, Content on Right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* Image Column */}
+            <div className="rounded-lg overflow-hidden shadow-xl">
+              <img 
+                src="/david-muema.jpg" 
+                alt="David Muema" 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            
             {/* Content Column */}
             <div>
               <h3 className="text-2xl font-bold text-[#15133F] mb-2">David Muema</h3>
@@ -150,15 +159,6 @@ const AboutUs = () => {
                 financial modeling, credit evaluation, and portfolio research strengthens 254 Capital's
                 ability to make data-driven decisions and deliver measurable returns.
               </p>
-            </div>
-            
-            {/* Image Column */}
-            <div className="rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="/david-muema.jpg" 
-                alt="David Muema" 
-                className="w-full h-auto object-cover"
-              />
             </div>
           </div>
         </div>
