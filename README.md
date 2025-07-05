@@ -1,18 +1,9 @@
-# Welcome to your Lovable project
-
+# Welcome to 254-Capital Project
 ## Project info
 
-**URL**: https://lovable.dev/projects/1c15ea77-e0be-4087-aab5-87dc2cd0b38d
+**Demo Server URL**: https://254-capital-nine.vercel.app/
 
 ## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/1c15ea77-e0be-4087-aab5-87dc2cd0b38d) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
@@ -62,12 +53,8 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/1c15ea77-e0be-4087-aab5-87dc2cd0b38d) and click on Share -> Publish.
+# Step 1: Run
+npm run build
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+# Step 2: Copy code to your hosting account
+After running step 1 above, the build version will be availble in your project folder, copy this folder to the root of your hosting server and your website will be live immediately.
